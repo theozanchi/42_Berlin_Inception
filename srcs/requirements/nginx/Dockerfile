@@ -1,20 +1,23 @@
-FROM	debian:stable
+FROM	debian:bullseye
 
 WORKDIR	/nginx/
 
 RUN		apt-get update && \
-		apt-get upgrade && \
+		apt-get upgrade -y && \
 		apt-get install -y \
 			nginx \
-			openssl \
-			procps && \
+			openssl && \
 		apt-get clean && \
 		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY	. .
+COPY	nginx.conf .
+COPY	entrypoint.sh /usr/local/bin
+COPY	content/index.html /var/www/html
 
-RUN		chmod +x entrypoint.sh
+RUN		chmod +x /usr/local/bin/entrypoint.sh
 
-EXPOSE	443 9000
+EXPOSE	80
 
-ENTRYPOINT [ "/nginx/entrypoint.sh" ]
+WORKDIR	/
+
+ENTRYPOINT [ "bash", "/usr/local/bin/entrypoint.sh" ]
