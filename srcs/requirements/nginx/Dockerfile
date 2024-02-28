@@ -6,7 +6,8 @@ RUN		apt-get update && \
 		apt-get upgrade && \
 		apt-get install -y \
 			nginx \
-			openssl && \
+			openssl \
+			procps && \
 		apt-get clean && \
 		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -14,6 +15,6 @@ COPY	. .
 
 RUN		chmod +x entrypoint.sh
 
-EXPOSE	8080
+EXPOSE	443 9000
 
 ENTRYPOINT [ "/nginx/entrypoint.sh" ]

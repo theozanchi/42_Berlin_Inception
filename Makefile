@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/02/28 10:50:11 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/02/28 11:41:29 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,14 +31,46 @@ build_nginx:
 				@docker build -t my-nginx $(NGINX)
 
 run_nginx:
-				@docker run -d my-nginx
+				@docker run -d --init -p 443:443 -p 9000:9000 --name my-nginx-container my-nginx
 
 stop_nginx:
 				@CONTAINERS=$$(docker ps -q --filter ancestor=my-nginx); \
 				if [ -n "$$CONTAINERS" ]; then \
-					docker stop $$CONTAINERS; \
+					docker stop $$CONTAINERS > /dev/null 2>&1; \
+					docker rm $$CONTAINERS > /dev/null 2>&1; \
+					echo "Stopped and removed my-nginx-container ($$CONTAINERS)"; \
 				else \
-					echo "No running my-nginx container"; \
+					echo "No running my-nginx-container"; \
+				fi
+
+build_mariadb:
+				@docker build -t my-nginx $(MARIADB)
+
+run_mariadb:
+				@docker run -d --init --name my-mariadb-container my-mariadb
+
+stop_mariadb:
+				@CONTAINERS=$$(docker ps -q --filter ancestor=my-mariadb); \
+				if [ -n "$$CONTAINERS" ]; then \
+					docker stop $$CONTAINERS; \
+					docker rm $$CONTAINERS; \
+				else \
+					echo "No running my-mariadb-container"; \
+				fi
+
+build_wordpress:
+				@docker build -t my-wordpress $(WORDPRESS)
+
+run_wordpress:
+				@docker run -d --init --name my-wordpress-container my-wordpress
+
+stop_wordpress:
+				@CONTAINERS=$$(docker ps -q --filter ancestor=my-wordpress); \
+				if [ -n "$$CONTAINERS" ]; then \
+					docker stop $$CONTAINERS; \
+					docker rm $$CONTAINERS; \
+				else \
+					echo "No running my-wordpress-container"; \
 				fi
 
 project_logo:
