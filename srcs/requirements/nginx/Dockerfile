@@ -1,11 +1,19 @@
-FROM debian:stable
+FROM	debian:stable
 
-WORKDIR /nginx
+WORKDIR	/nginx/
 
-COPY . .
+RUN		apt-get update && \
+		apt-get upgrade && \
+		apt-get install -y \
+			nginx \
+			openssl && \
+		apt-get clean && \
+		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN apt-get update && apt-get install nginx
+COPY	. .
 
-CMD [ "./launch.sh" ]
+RUN		chmod +x entrypoint.sh
 
-EXPOSE port
+EXPOSE	8080
+
+ENTRYPOINT [ "/nginx/entrypoint.sh" ]
