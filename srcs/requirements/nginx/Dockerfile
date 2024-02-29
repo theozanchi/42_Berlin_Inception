@@ -10,13 +10,24 @@ RUN		apt-get update && \
 		apt-get clean && \
 		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-COPY	nginx.conf .
+COPY	nginx.conf /etc/nginx/conf.d/server.conf
 COPY	entrypoint.sh /usr/local/bin
 COPY	content/index.html /var/www/html
 
 RUN		chmod +x /usr/local/bin/entrypoint.sh
 
-EXPOSE	80
+RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+			-keyout /etc/ssl/private/nginx-selfsigned.key \
+			-out /etc/ssl/certs/nginx-selfsigned.crt \
+			-subj "/C=DE/\
+					ST=Berlin/\
+					L=Berlin/\
+					O=42_Berlin/\
+					OU=Student/\
+					CN=tzanchi/\
+					emailAddress=tzanchi@student.42berlin.de"
+
+EXPOSE	443
 
 WORKDIR	/
 

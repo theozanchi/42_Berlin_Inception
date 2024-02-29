@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/02/28 17:01:44 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/02/29 11:07:06 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ build_nginx:
 				@docker build -t my-nginx $(NGINX)
 
 run_nginx:
-				@docker run -d --init -p 80:80 --name my-nginx-container my-nginx
+				@docker run -d --init -p 443:443 --name my-nginx-container my-nginx
 
 stop_nginx:
 				@CONTAINERS=$$(docker ps -q --filter ancestor=my-nginx); \
@@ -42,9 +42,6 @@ stop_nginx:
 				else \
 					echo "No running my-nginx-container"; \
 				fi
-
-rebuild_start_nginx:
-				stop_nginx build_nginx start_nginx
 
 build_mariadb:
 				@docker build -t my-nginx $(MARIADB)
