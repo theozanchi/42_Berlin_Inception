@@ -4,7 +4,7 @@ WORKDIR		/mariadb/
 
 RUN			apt-get update -y && apt-get upgrade -y && \
 			apt-get install -y \
-				mariadb && \
+				mariadb-server && \
 			apt-get clean && \
 			rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -16,4 +16,6 @@ EXPOSE		3306
 
 WORKDIR		/
 
-ENTRYPOINT	[ "bash", "/usr/local/bin/entrypoint.sh" ]
+# ENTRYPOINT	[ "bash", "/usr/local/bin/entrypoint.sh" ]
+
+CMD [ "sleep", "infinity" ]

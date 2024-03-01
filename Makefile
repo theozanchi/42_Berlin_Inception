@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/02/29 11:07:06 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/03/01 11:08:07 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,10 @@ stop_nginx:
 				fi
 
 build_mariadb:
-				@docker build -t my-nginx $(MARIADB)
+				@docker build -t my-mariadb $(MARIADB)
 
 run_mariadb:
-				@docker run -d --init --name my-mariadb-container my-mariadb
+				@docker run -d --init -p 3306:3306 --name my-mariadb-container my-mariadb
 
 stop_mariadb:
 				@CONTAINERS=$$(docker ps -q --filter ancestor=my-mariadb); \
