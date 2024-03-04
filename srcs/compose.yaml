@@ -1,6 +1,8 @@
 services:
   nginx:
     container_name: my-nginx-container
+    env_file:
+      - default.env
     ports:
       - 443:443
     build:
