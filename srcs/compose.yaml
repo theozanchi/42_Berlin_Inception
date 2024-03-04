@@ -9,6 +9,8 @@ services:
 
   mariadb:
     container_name: my-mariadb-container
+    env_file:
+      - default.env
     ports:
       - 3306:3306
     build: requirements/mariadb
