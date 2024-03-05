@@ -6,6 +6,9 @@ services:
     ports:
       - 443:443
     build: requirements/nginx
+    init: true
+    networks:
+      - internal
 
   mariadb:
     container_name: my-mariadb-container
@@ -14,5 +17,27 @@ services:
     ports:
       - 3306:3306
     build: requirements/mariadb
+    init: true
+    networks:
+      - internal
+    volumes:
+      - mariadb:/home/tzanchi/data
+    secrets:
+      - passwords
 
   # wordpress:
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mariadb:
+    name: "my-mariadb-volume"
+
+  wordpress:
+    name: "my-wordpress-volume"
+
+secrets:
+  passwords:
+    file: ./passwords.secret

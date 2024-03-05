@@ -16,6 +16,4 @@ EXPOSE		3306
 
 WORKDIR		/
 
-# ENTRYPOINT	[ "bash", "/usr/local/bin/entrypoint.sh" ]
-
-CMD [ "sleep", "infinity" ]
+ENTRYPOINT	[ "bash", "/usr/local/bin/entrypoint.sh" ]
