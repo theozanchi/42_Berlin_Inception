@@ -20,6 +20,7 @@ You need to have Docker installed in order for it to work
 
 # Details about the project infrastructure
 The project has to be set up within a virtual machine in order to have sudo rights (we do not have sudo rights on the school network).
+
 ![Project architecture](.media/project_architecture.png)
 
 Docker-compose is used to build the project. Each service has a dedicated container.
