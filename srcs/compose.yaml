@@ -22,8 +22,12 @@ services:
       - internal
     volumes:
       - mariadb:/home/tzanchi/data
+    environment:
+      MARIADB_PWD: /run/secrets/mariadb_pwd
+      MARIADB_ROOT_PWD: /run/secrets/mariadb_root_pwd
     secrets:
-      - passwords
+      - mariadb_pwd
+      - mariadb_root_pwd
 
   # wordpress:
 
@@ -39,5 +43,7 @@ volumes:
     name: "my-wordpress-volume"
 
 secrets:
-  passwords:
-    file: ./passwords.secret
+  mariadb_pwd:
+    file: ./mariadb_pwd.secret
+  mariadb_root_pwd:
+    file: ./mariadb_root_pwd.secret

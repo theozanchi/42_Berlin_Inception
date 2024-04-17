@@ -1,7 +1,9 @@
 #! /usr/bin/bash
 
 service mariadb start
-sleep 2
+
+# sleep infinity
+
 mariadb -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
 
 mariadb -e "CREATE USER IF NOT EXISTS \`${USER_NAME}\`@'localhost' IDENTIFIED BY '${MARIADB_PWD}';"
