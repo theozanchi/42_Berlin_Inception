@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/03/04 12:53:52 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/20 14:20:25 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,11 @@ up:
 
 down:
 				@docker compose -f ./srcs/compose.yaml down
+
+prune:
+				@docker system prune -af
+
+re:				down prune up
 
 project_logo:
 				@echo "\n$(BOLD)                              ##        $(BLUE).$(NC)"
