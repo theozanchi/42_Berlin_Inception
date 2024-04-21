@@ -7,6 +7,7 @@ services:
       - 443:443
     build: requirements/nginx
     init: true
+    restart: always
     networks:
       - internal
 
@@ -18,10 +19,11 @@ services:
       - 3306:3306
     build: requirements/mariadb
     init: true
+    restart: always
     networks:
       - internal
     volumes:
-      - mariadb:/home/tzanchi/data
+      - mariadb:/var/lib/mysql
     environment:
       MARIADB_PWD: /run/secrets/mariadb_pwd
       MARIADB_ROOT_PWD: /run/secrets/mariadb_root_pwd
@@ -38,6 +40,11 @@ networks:
 volumes:
   mariadb:
     name: "my-mariadb-volume"
+    driver: local
+    driver_opts:
+      type: none
+      device: ~/tzanchi/data/mariadb
+      o: bind
 
   wordpress:
     name: "my-wordpress-volume"
