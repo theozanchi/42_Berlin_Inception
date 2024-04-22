@@ -51,6 +51,6 @@ volumes:
 
 secrets:
   mariadb_pwd:
-    file: ./secrets/mariadb_pwd.secret
+    file: ./secrets/mariadb/mariadb_pwd.secret
   mariadb_root_pwd:
-    file: ./secrets/mariadb_root_pwd.secret
+    file: ./secrets/mariadb/mariadb_root_pwd.secret
