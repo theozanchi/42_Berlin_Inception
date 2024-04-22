@@ -7,7 +7,7 @@ services:
       - 443:443
     build: requirements/nginx
     init: true
-    restart: always
+    # restart: always
     networks:
       - internal
 
@@ -19,7 +19,7 @@ services:
       - 3306:3306
     build: requirements/mariadb
     init: true
-    restart: always
+    # restart: always
     networks:
       - internal
     volumes:
@@ -31,27 +31,27 @@ services:
       - mariadb_pwd
       - mariadb_root_pwd
 
-  wordpress:
-    container_name: my-wordpress-container
-    depends_on:
-      - mariadb
-    env_file:
-      - default.env
-    ports:
-      - 9000:9000
-    build: requirements/wordpress
-    init: true
-    restart: always
-    networks:
-      - internal
-    volumes:
-      - wordpress:/var/www/html
-    environment:
-      MARIADBPWD: /run/secrets/mariadb_pwd
-      MARIADBROOTPWD: /run/secrets/mariadb_root_pwd
-    secrets:
-      - mariadb_pwd
-      - mariadb_root_pwd
+  # wordpress:
+  #   container_name: my-wordpress-container
+  #   depends_on:
+  #     - mariadb
+  #   env_file:
+  #     - default.env
+  #   ports:
+  #     - 9000:9000
+  #   build: requirements/wordpress
+  #   init: true
+  #   restart: always
+  #   networks:
+  #     - internal
+  #   volumes:
+  #     - wordpress:/var/www/html
+  #   environment:
+  #     MARIADBPWD: /run/secrets/mariadb_pwd
+  #     MARIADBROOTPWD: /run/secrets/mariadb_root_pwd
+  #   secrets:
+  #     - mariadb_pwd
+  #     - mariadb_root_pwd
 
 networks:
   internal:
@@ -60,14 +60,9 @@ networks:
 volumes:
   mariadb:
     name: "my-mariadb-volume"
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/tzanchi/data/mariadb
-      o: bind
 
-  wordpress:
-    name: "my-wordpress-volume"
+#   wordpress:
+#     name: "my-wordpress-volume"
 
 secrets:
   mariadb_pwd:

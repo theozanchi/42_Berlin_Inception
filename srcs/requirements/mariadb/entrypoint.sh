@@ -1,21 +1,19 @@
-#!/bin/bash
+#!/bin/sh
 
-service mariadb start
+if [ ! -d /var/lib/mysql/$DB_NAME ]; then
+	service mariadb start
 
-# Waiting for MariaDB to be ready before appying any modification
-while ! mysqladmin ping -h localhost --silent; do
-	sleep 1
-done
+	while ! mysqladmin ping -h localhost --silent; do
+		sleep 1
+	done
 
-# Configuring MariaDB
-mariadb -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;"
-mariadb -e "CREATE USER IF NOT EXISTS \`${USER_NAME}\`@'localhost' IDENTIFIED BY '$(cat ${MARIADB_PWD})';"
-mariadb -e "GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${USER_NAME}\`@'%' IDENTIFIED BY '$(cat ${MARIADB_PWD})';"
-mariadb -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat ${MARIADB_ROOT_PWD})';"
+	mariadb -u root -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`; \
+						CREATE USER IF NOT EXISTS \`${USER_NAME}\`@'localhost' IDENTIFIED BY '$(cat $MARIADB_PWD)'; \
+						GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${USER_NAME}\`@'%' IDENTIFIED BY '$(cat $MARIADB_PWD)'; \
+						ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat $MARIADB_ROOT_PWD)'; \
+						FLUSH PRIVILEGES;"
 
-# Forcing changes to be immediately applied
-mariadb -u root -p$(cat ${MARIADB_ROOT_PWD}) -e "FLUSH PRIVILEGES;"
+	mysqladmin --user=root --password=$(cat ${MARIADB_ROOT_PWD}) shutdown
+fi
 
-# Restarting MariaDB
-mysqladmin -u root -p$(cat ${MARIADB_ROOT_PWD}) shutdown
 exec mysqld_safe
