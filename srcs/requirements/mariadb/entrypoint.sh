@@ -8,12 +8,12 @@ if [ ! -d /var/lib/mysql/$DB_NAME ]; then
 	done
 
 	mariadb -u root -e "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`; \
-						CREATE USER IF NOT EXISTS \`${USER_NAME}\`@'localhost' IDENTIFIED BY '$(cat $MARIADB_PWD)'; \
-						GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${USER_NAME}\`@'%' IDENTIFIED BY '$(cat $MARIADB_PWD)'; \
-						ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat $MARIADB_ROOT_PWD)'; \
+						CREATE USER IF NOT EXISTS \`${DB_USER}\`@'localhost' IDENTIFIED BY '$(cat $DB_PWD)'; \
+						GRANT ALL PRIVILEGES ON \`${DB_NAME}\`.* TO \`${USER_NAME}\`@'%' IDENTIFIED BY '$(cat $DB_PWD)'; \
+						ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat $DB_ROOT_PWD)'; \
 						FLUSH PRIVILEGES;"
 
-	mysqladmin --user=root --password=$(cat ${MARIADB_ROOT_PWD}) shutdown
+	mysqladmin --user=root --password=$(cat ${DB_ROOT_PWD}) shutdown
 fi
 
 exec mysqld_safe

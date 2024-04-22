@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/04/22 09:58:43 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/22 19:33:48 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,13 @@ secrets:
 					echo -n "$(CYAN)Generating MariaDB secrets... $(NC)"; \
 					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_pwd.secret; \
 					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_root_pwd.secret; \
+					echo "$(GREEN)Done!$(NC)"; \
+				fi
+				@if [ ! -d $(SECRETS)/$(WORDPRESS) ]; \
+					then mkdir $(SECRETS)/$(WORDPRESS); \
+					echo -n "$(CYAN)Generating Wordpress secrets... $(NC)"; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(WORDPRESS)/wp_admin_pwd.secret; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(WORDPRESS)/wp_user_pwd.secret; \
 					echo "$(GREEN)Done!$(NC)"; \
 				fi
 

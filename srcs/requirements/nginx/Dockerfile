@@ -11,7 +11,6 @@ RUN		apt-get update -y && apt-get upgrade -y && \
 
 COPY	nginx.conf /etc/nginx/conf.d/server.conf
 COPY	entrypoint.sh /usr/local/bin
-COPY	content/index.html /var/www/html
 
 RUN		chmod +x /usr/local/bin/entrypoint.sh
 
