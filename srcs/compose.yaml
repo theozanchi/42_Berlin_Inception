@@ -31,7 +31,27 @@ services:
       - mariadb_pwd
       - mariadb_root_pwd
 
-  # wordpress:
+  wordpress:
+  container_name: my-wordpress-container
+  depends_on:
+    - mariadb
+  env_file:
+    - default.env
+  ports:
+    - 9000:9000
+  build: requirements/wordpress
+  init: true
+  restart: always
+  networks:
+    - internal
+  volumes:
+    - wordpress:/var/www/html
+  environment:
+    MARIADBPWD: /run/secrets/mariadb_pwd
+    MARIADBROOTPWD: /run/secrets/mariadb_root_pwd
+  secrets:
+    - mariadb_pwd
+    - mariadb_root_pwd
 
 networks:
   internal:
