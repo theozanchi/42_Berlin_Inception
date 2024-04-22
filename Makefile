@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/04/22 09:52:53 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/22 09:58:43 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,8 @@ secrets:
 				@if [ ! -d $(SECRETS)/$(MARIADB) ]; \
 					then mkdir $(SECRETS)/$(MARIADB); \
 					echo -n "$(CYAN)Generating MariaDB secrets... $(NC)"; \
-					openssl rand -base64 12 > $(SECRETS)/$(MARIADB)/mariadb_pwd.secret; \
-					openssl rand -base64 12 > $(SECRETS)/$(MARIADB)/mariadb_root_pwd.secret; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_pwd.secret; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_root_pwd.secret; \
 					echo "$(GREEN)Done!$(NC)"; \
 				fi
 
