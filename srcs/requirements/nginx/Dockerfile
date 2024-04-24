@@ -10,9 +10,6 @@ RUN		apt-get update -y && apt-get upgrade -y && \
 		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY	nginx.conf /etc/nginx/conf.d/server.conf
-COPY	entrypoint.sh /usr/local/bin
-
-RUN		chmod +x /usr/local/bin/entrypoint.sh
 
 RUN		openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 			-keyout /etc/ssl/private/nginx-selfsigned.key \
@@ -29,4 +26,4 @@ EXPOSE	443
 
 WORKDIR	/
 
-ENTRYPOINT [ "bash", "/usr/local/bin/entrypoint.sh" ]
+CMD [ "nginx", "-g", "daemon off;" ]

@@ -1,15 +1,19 @@
 services:
   nginx:
     container_name: my-nginx-container
+    depends_on: 
+      - wordpress
     env_file:
       - default.env
     ports:
       - 443:443
     build: requirements/nginx
     init: true
-    restart: always
+    restart: unless-stopped
     networks:
       - internal
+    volumes:
+      - ./web:/var/www/html
 
   mariadb:
     container_name: my-mariadb-container
@@ -19,7 +23,7 @@ services:
       - 3306:3306
     build: requirements/mariadb
     init: true
-    restart: always
+    restart: unless-stopped
     networks:
       - internal
     volumes:
@@ -41,11 +45,11 @@ services:
       - 9000:9000
     build: requirements/wordpress
     init: true
-    restart: always
+    restart: unless-stopped
     networks:
       - internal
     volumes:
-      - wordpress:/var/www/html
+      - ./web:/var/www/html
     environment:
       DB_PWD: /run/secrets/mariadb_pwd
       WP_ADMIN_PWD: /run/secrets/wp_admin_pwd
