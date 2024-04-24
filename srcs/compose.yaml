@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: my-nginx-container
+    container_name: nginx
     depends_on: 
       - wordpress
     env_file:
@@ -16,7 +16,7 @@ services:
       - wordpress:/var/www/html
 
   mariadb:
-    container_name: my-mariadb-container
+    container_name: mariadb
     env_file:
       - default.env
     ports:
@@ -26,8 +26,8 @@ services:
     restart: unless-stopped
     networks:
       - internal
-    volumes:
-      - mariadb:/var/lib/mysql
+    # volumes:
+    #   - mariadb:/var/lib/mysql
     environment:
       DB_PWD: /run/secrets/mariadb_pwd
       DB_ROOT_PWD: /run/secrets/mariadb_root_pwd
@@ -36,7 +36,7 @@ services:
       - mariadb_root_pwd
 
   wordpress:
-    container_name: my-wordpress-container
+    container_name: wordpress
     depends_on:
       - mariadb
     env_file:
@@ -65,10 +65,10 @@ networks:
 
 volumes:
   mariadb:
-    name: "my-mariadb-volume"
+    name: "DB"
 
   wordpress:
-    name: "my-wordpress-volume"
+    name: "WordPress"
 
 secrets:
   mariadb_pwd:

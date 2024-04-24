@@ -8,4 +8,4 @@ echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$(cat $DB_ROOT_PWD)';" >> /et
 echo "FLUSH PRIVILEGES;" >> /etc/mysql/init.sql
 
 # Start the MariaDB server
-exec mysqld_safe
+exec mysqld_safe --bind_address=0.0.0.0

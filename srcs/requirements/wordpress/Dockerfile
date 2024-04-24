@@ -5,9 +5,11 @@ WORKDIR /wordpress/
 RUN		apt-get update -y && apt-get upgrade -y && \
 		apt-get install -y \
 			curl \
+			iputils-ping \
+			mariadb-client \
 			php \
 			php-fpm \
-			php-mysqli && \
+			php-mysql && \
 		apt-get clean && \
 		rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

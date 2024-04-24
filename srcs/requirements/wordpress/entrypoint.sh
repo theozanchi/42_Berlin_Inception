@@ -2,9 +2,16 @@
 
 cd /var/www/html
 
-wp core download --allow-root
+if [ ! -d "wp-admin " ]; then
+	wp core download --allow-root
+fi
 
-if [ ! -e /var/www/wordpress/wp-config.php ]; then
+while ! mysqladmin ping --host=$DB_HOST --silent; do
+	echo "$(date +%d%m%y\ %H:%M:%S) Waiting for database connection..."
+	sleep 5
+done
+
+if [ ! -e /var/www/html/wp-config.php ]; then
 	wp config create \
 		--dbname=$DB_NAME \
 		--dbuser=$DB_USER \
