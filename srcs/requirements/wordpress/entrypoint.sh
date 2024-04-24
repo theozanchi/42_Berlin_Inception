@@ -1,10 +1,8 @@
 #!/bin/bash
 
-cd /var/www
+cd /var/www/html
 
-wp core download --path=wordpress --allow-root
-
-cd wordpress
+wp core download --allow-root
 
 if [ ! -e /var/www/wordpress/wp-config.php ]; then
 	wp config create \
@@ -15,18 +13,18 @@ if [ ! -e /var/www/wordpress/wp-config.php ]; then
 		--allow-root
 fi
 
-wp core install \
-	--url=$SERVER_NAME \
-	--title=$SITE_TITLE \
-	--admin_user=$WP_ADMIN \
-	--admin_email=$WP_ADMIN_EMAIL \
-	--admin_password=$(cat $WP_ADMIN_PWD) \
-	--allow-root
+# wp core install \
+# 	--url=$SERVER_NAME \
+# 	--title=$SITE_TITLE \
+# 	--admin_user=$WP_ADMIN \
+# 	--admin_email=$WP_ADMIN_EMAIL \
+# 	--admin_password=$(cat $WP_ADMIN_PWD) \
+# 	--allow-root
 
-wp user create $WP_USER $WP_USER_EMAIL \
-	--user_pass=$(cat $WP_USER_PWD) \
-	--role=editor \
-	--allow-root
+# wp user create $WP_USER $WP_USER_EMAIL \
+# 	--user_pass=$(cat $WP_USER_PWD) \
+# 	--role=editor \
+# 	--allow-root
 
 if [ ! -d /run/php ]; then
 	mkdir /run/php

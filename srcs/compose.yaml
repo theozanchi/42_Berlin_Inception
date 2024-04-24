@@ -13,7 +13,7 @@ services:
     networks:
       - internal
     volumes:
-      - ./web:/var/www/html
+      - wordpress:/var/www/html
 
   mariadb:
     container_name: my-mariadb-container
@@ -49,7 +49,7 @@ services:
     networks:
       - internal
     volumes:
-      - ./web:/var/www/html
+      - wordpress:/var/www/html
     environment:
       DB_PWD: /run/secrets/mariadb_pwd
       WP_ADMIN_PWD: /run/secrets/wp_admin_pwd
