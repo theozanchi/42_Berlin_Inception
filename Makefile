@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/04/22 09:58:43 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/25 10:34:16 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ NC			=	\033[0m
 BOLD		=	\033[1m
 TICK		=	✓
 
-all:			project_logo secrets up
+all:			project_logo secrets volume_dir up
 
 up:
 				@docker compose -f ./srcs/compose.yaml up -d
@@ -40,6 +40,10 @@ prune:
 
 re:				down prune up
 
+volume_dir:
+				@mkdir -p /home/tzanchi/data/mariadb
+				@mkdir -p /home/tzanchi/data/wordpress
+
 secrets:		
 				@if [ ! -d $(SECRETS) ]; \
 					then mkdir $(SECRETS); \
@@ -49,6 +53,13 @@ secrets:
 					echo -n "$(CYAN)Generating MariaDB secrets... $(NC)"; \
 					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_pwd.secret; \
 					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(MARIADB)/mariadb_root_pwd.secret; \
+					echo "$(GREEN)Done!$(NC)"; \
+				fi
+				@if [ ! -d $(SECRETS)/$(WORDPRESS) ]; \
+					then mkdir $(SECRETS)/$(WORDPRESS); \
+					echo -n "$(CYAN)Generating Wordpress secrets... $(NC)"; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(WORDPRESS)/wp_admin_pwd.secret; \
+					openssl rand -base64 12 | tr -d '\n' > $(SECRETS)/$(WORDPRESS)/wp_user_pwd.secret; \
 					echo "$(GREEN)Done!$(NC)"; \
 				fi
 
