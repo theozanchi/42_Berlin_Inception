@@ -1,12 +1,13 @@
 services:
   nginx:
-    container_name: nginx
+    container_name: my-nginx
     depends_on: 
       - wordpress
     env_file:
       - default.env
     ports:
       - 443:443
+    image: my-nginx
     build: requirements/nginx
     init: true
     restart: unless-stopped
@@ -16,11 +17,12 @@ services:
       - wordpress:/var/www/html
 
   mariadb:
-    container_name: mariadb
+    container_name: my-mariadb
     env_file:
       - default.env
     ports:
       - 3306:3306
+    image: my-mariadb
     build: requirements/mariadb
     init: true
     restart: unless-stopped
@@ -36,13 +38,14 @@ services:
       - mariadb_root_pwd
 
   wordpress:
-    container_name: wordpress
+    container_name: my-wordpress
     depends_on:
       - mariadb
     env_file:
       - default.env
     ports:
       - 9000:9000
+    image: my-wordpress
     build: requirements/wordpress
     init: true
     restart: unless-stopped
