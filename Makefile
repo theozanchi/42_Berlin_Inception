@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/04/25 09:43:26 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/25 10:34:16 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ NC			=	\033[0m
 BOLD		=	\033[1m
 TICK		=	✓
 
-all:			project_logo secrets up
+all:			project_logo secrets volume_dir up
 
 up:
 				@docker compose -f ./srcs/compose.yaml up -d
@@ -39,6 +39,10 @@ prune:
 				@docker system prune -af
 
 re:				down prune up
+
+volume_dir:
+				@mkdir -p /home/tzanchi/data/mariadb
+				@mkdir -p /home/tzanchi/data/wordpress
 
 secrets:		
 				@if [ ! -d $(SECRETS) ]; \

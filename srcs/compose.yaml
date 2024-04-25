@@ -69,9 +69,19 @@ networks:
 volumes:
   mariadb:
     name: "DB"
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tzanchi/data/mariadb
+      o: bind
 
   wordpress:
     name: "WordPress"
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/tzanchi/data/wordpress
+      o: bind
 
 secrets:
   mariadb_pwd:
