@@ -26,8 +26,8 @@ services:
     restart: unless-stopped
     networks:
       - internal
-    # volumes:
-    #   - mariadb:/var/lib/mysql
+    volumes:
+      - mariadb:/var/lib/mysql
     environment:
       DB_PWD: /run/secrets/mariadb_pwd
       DB_ROOT_PWD: /run/secrets/mariadb_root_pwd

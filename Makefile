@@ -6,7 +6,7 @@
 #    By: tzanchi <tzanchi@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 10:42:16 by tzanchi           #+#    #+#              #
-#    Updated: 2024/04/24 16:42:52 by tzanchi          ###   ########.fr        #
+#    Updated: 2024/04/25 09:27:59 by tzanchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,11 +43,12 @@ re:				down prune up
 rm_mariadb:
 				@docker image rm srcs-mariadb
 
+rm_wp:
+				@docker image rm srcs-wordpress
+
 mariadb_re:		down rm_mariadb	up
 
-wp_re:			down
-				@docker image rm srcs-wordpress
-				up
+wp_re:			down rm_wp up
 
 secrets:		
 				@if [ ! -d $(SECRETS) ]; \
