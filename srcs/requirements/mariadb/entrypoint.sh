@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Create the SQL init script
 echo "CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\`;" > /etc/mysql/init.sql
